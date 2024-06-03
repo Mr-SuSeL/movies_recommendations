@@ -29,17 +29,20 @@ library(recommenderlab)
 
 # removing zeros
 #Convert ratings matrix to real rating matrix which makes it dense
-ratingmat = as(ratingmat, "realRatingMatrix") # broken
+ratingmat = as(ratingmat, "realRatingMatrix") # works I think
 
 #Normalize the ratings matrix
-ratingmat = normalize(ratingmat) # broken
+ratingmat = normalize(ratingmat) # broken?
 
 #Create Recommender Model. The parameters are UBCF and Cosine similarity. We take 10 nearest neighbours
-rec_mod = Recommender(ratingmat, method = "UBCF", param=list(method="Cosine",nn=10)) 
+rec_mod = Recommender(ratingmat, method = "UBCF", param=list(method="Cosine",nn=10)) #looks good
 
+# Prediction module:
+# Obtain top 5 recommendations for 7th user entry in dataset
+Top_5_pred = predict(rec_mod, ratingmat[7], n=5)
 
-
-
+#Convert the recommendations to a list
+Top_5_List = as(Top_5_pred, "list")
 
 
 
