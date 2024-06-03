@@ -1,0 +1,5 @@
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(cluster)
+setwd("C:\Users\susel\OneDrive\Pulpit\UczenieMaszynowe_lab\Recomendations_Movies\movies_recomendations\recomender.R")
