@@ -24,18 +24,18 @@ ratingmat = dcast(ratings, user_id ~ movie_id, value.var = "rating")
 ratingmat = as.matrix(ratingmat[,-1]) #sparse matrix
 
 # let's choice to calculate similarity according to the cosine similarity method
-install.packages("recommenderlab", dependencies=TRUE)
+#install.packages("recommenderlab", dependencies=TRUE)
 library(recommenderlab)
 
 # removing zeros
 #Convert ratings matrix to real rating matrix which makes it dense
-ratingmat = as(ratingmat, "realRatingMatrix") # works I think
+ratingmat = as(ratingmat, "realRatingMatrix") 
 
 #Normalize the ratings matrix
-ratingmat = normalize(ratingmat) # broken?
+ratingmat = normalize(ratingmat) 
 
 #Create Recommender Model. The parameters are UBCF and Cosine similarity. We take 10 nearest neighbours
-rec_mod = Recommender(ratingmat, method = "UBCF", param=list(method="Cosine",nn=10)) #looks good
+rec_mod = Recommender(ratingmat, method = "UBCF", param=list(method="Cosine",nn=10)) 
 
 # Prediction module:
 # Obtain top 5 recommendations for 7th user entry in dataset
@@ -43,6 +43,48 @@ Top_5_pred = predict(rec_mod, ratingmat[7], n=5)
 
 #Convert the recommendations to a list
 Top_5_List = as(Top_5_pred, "list")
+
+#We convert the list to a dataframe and change the column name to movieId
+#Top_5_df=data.frame(Top_5_List)
+#colnames(Top_5_df)="movieId"
+Top_5_df=data.frame(Top_5_List)
+colnames(Top_5_df)="movie_id"
+
+
+#Since movieId is of type integer in Movies data, we typecast id in our recommendations as well
+Top_5_df$movie_id=as.numeric(Top_5_df$movie_id)
+
+
+#install.packages("tidytable")
+#library(tidytable)
+#Merge the movie ids with names to get titles and genres
+#names=left_join(Top_5_df, movies, by="movieId")
+names=left_join(Top_5_df, movies, by="movie_id")
+# Problem with data typing integer of movies dataset vs character Top_5_df resolved
+
+#Print the titles and genres
+names
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
