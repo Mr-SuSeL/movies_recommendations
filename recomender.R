@@ -63,8 +63,8 @@ names=left_join(Top_5_df, movies, by="movie_id")
 # Problem with data typing integer of movies dataset vs character Top_5_df resolved
 
 #Print the titles and genres
+names <- names[ ,-2]
 names
-
 
 
 
